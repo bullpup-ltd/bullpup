@@ -24,7 +24,7 @@ export async function POST(request: Request) {
     }
 
     const { data, error } = await resend.emails.send({
-      from: 'Bullpup PTY LTD <onboarding@resend.dev>',
+      from: 'Bullpup PTY LTD <noreply@bullpupptyltd.com>',
       to: ['BULLPUP2024@outlook.com'],
       replyTo: email,
       subject: `New Quote Request - ${service_type}`,
