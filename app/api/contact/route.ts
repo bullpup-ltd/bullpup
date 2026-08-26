@@ -3,33 +3,33 @@ import { Resend } from 'resend'
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(request: Request) {
-    try {
-        const body = await request.json()
+  try {
+    const body = await request.json()
 
-        const {
-            name,
-            email,
-            service_type,
-            message,
-        } = body
+    const {
+      name,
+      email,
+      service_type,
+      message,
+    } = body
 
-        if (!name || !email || !service_type || !message) {
-            return Response.json(
-                {
-                    success: false,
-                    message: 'Please complete all required fields.',
-                },
-                { status: 400 }
-            )
-        }
+    if (!name || !email || !service_type || !message) {
+      return Response.json(
+        {
+          success: false,
+          message: 'Please complete all required fields.',
+        },
+        { status: 400 }
+      )
+    }
 
-        const { data, error } = await resend.emails.send({
-            from: 'Bullpup PTY LTD <onboarding@resend.dev>',
-            to: ['jesseemmanuel@gmail.com'],
-            replyTo: email,
-            subject: `New Quote Request - ${service_type}`,
+    const { data, error } = await resend.emails.send({
+      from: 'Bullpup PTY LTD <onboarding@resend.dev>',
+      to: ['BULLPUP2024@outlook.com'],
+      replyTo: email,
+      subject: `New Quote Request - ${service_type}`,
 
-            html: `
+      html: `
         <!DOCTYPE html>
         <html>
           <body style="margin:0;padding:0;background:#f5f5f5;font-family:Arial,sans-serif;">
@@ -106,33 +106,33 @@ export async function POST(request: Request) {
           </body>
         </html>
       `,
-        })
+    })
 
-        if (error) {
-            console.error('Resend error:', error)
+    if (error) {
+      console.error('Resend error:', error)
 
-            return Response.json(
-                {
-                    success: false,
-                    message: error.message,
-                },
-                { status: 500 }
-            )
-        }
-
-        return Response.json({
-            success: true,
-            data,
-        })
-    } catch (error) {
-        console.error('Contact form error:', error)
-
-        return Response.json(
-            {
-                success: false,
-                message: 'Something went wrong while sending your request.',
-            },
-            { status: 500 }
-        )
+      return Response.json(
+        {
+          success: false,
+          message: error.message,
+        },
+        { status: 500 }
+      )
     }
+
+    return Response.json({
+      success: true,
+      data,
+    })
+  } catch (error) {
+    console.error('Contact form error:', error)
+
+    return Response.json(
+      {
+        success: false,
+        message: 'Something went wrong while sending your request.',
+      },
+      { status: 500 }
+    )
+  }
 }
